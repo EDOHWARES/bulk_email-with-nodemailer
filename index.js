@@ -3,15 +3,6 @@ const nodemailer = require('nodemailer');
 const fs = require('fs');
 const path = require('path');
 const emails = require('./emailList.json');
-// const nodemailMailgun = require('nodemailer-mailgun-transport');
-
-// const auth = {
-//     auth: {
-//         api_key: '',
-//         domain: '',
-//     }
-// };
-// let transporter = nodemailer.createTransport(nodemailMailgun(auth))
 
 const batchSize = 100; // Example batch size
 
@@ -44,8 +35,15 @@ const sendEmails = async (batchSize) => {
         from: process.env.Email_User,
         to: email,
         subject: "Welcome to Our Service!",
-        text: "We're excited to have you on board. Here’s a quick guide to get started.",
+        text: "Your account has been locked due to inactivity.",
         html: htmlTemplate,
+        attachments: [
+          {
+            filename: "sky.jpg",
+            path: path.join(__dirname, "sky.jpg"),
+            cid: "sky", 
+          },
+        ],
       });
     });
 
